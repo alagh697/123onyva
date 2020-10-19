@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    
+
+    <h1>Inscription</h1>
+
+    {{ form_start(form) }}
+    
+    {{ form_row(form.nom, {'label' : 'Nom', 'attr' : { 'placeholder' : "Nom"}}) }}
+    {{ form_row(form.prenom, {'label' : 'Prénom', 'attr' : { 'placeholder' : "Prénom"}}) }}
+    {{ form_row(form.date_naissance, {'label' : 'Date de naissance'}) }}
+
+    {{ form_row(form.email, {'label' : 'Adresse email', 'attr' : { 'placeholder' : "Adresse email"}}) }}
+    {{ form_row(form.motdepasse, {'label' : 'Mot de passe (8 caractère minimum, au moins une lettre majuscule et au moins une lettre minuscule) ','attr' : { 'placeholder' : "Mot de passe"}})}}
+    {{ form_row(form.confirm_motdepasse, {'label' : 'Confirmation du mot de passe','attr' : { 'placeholder' : "Confirmez votre mot de passe"}})}}
+   
+    {{ form_row(form.telephone, {'label' : 'Téléphone', 'attr' : { 'placeholder' : "N° de Téléphone"}}) }}
+    {{ form_row(form.bio, {'label' : 'Bio', 'attr' : { 'placeholder' : "Décrivez vous en quelque mots..."}}) }}
+    
+    <div class="custom-control custom-switch">
+    {{ form_row(form.fumeur, { 'attr': {'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    
+    {{ form_row(form.musique, {'label' : 'Ecoutez vous de la musique en conduisant', 'attr': {'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    {{ form_row(form.discussion, {'label' : 'Aimez vous discuter en conduisant', 'attr': {'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    {{ form_row(form.passager_fumeur, {'label' : 'Acceptez vous des passagers fumeurs', 'attr': {'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    {{ form_row(form.passager_animal, {'label' : 'Acceptez vous des passagers accompagnés d\'animaux', 'attr': {'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{ form_end(form) }}
+
+{% endblock %}

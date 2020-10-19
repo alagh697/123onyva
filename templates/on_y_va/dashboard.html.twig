@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <h1>Votre tableau de bord</h1>
+
+    <h3>Les voyages que vous avez proposé</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col">Ville départ</th>
+            <th scope="col">Ville arrivée</th>
+            <th scope="col">Date départ</th>
+            <th scope="col">Heure départ</th>
+            <th scope="col">Date arrivée</th>
+            <th scope="col">Heure arrivée</th>
+            <th scope="col">Nombre place</th>
+            <th scope="col">Prix place</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for voyage in app.user.voyages %}
+            <tr class="table-primary">
+            <td>{{voyage.getVilleDepart.villeNomReel}}</td>
+            <td>{{voyage.getVilleArrivee.villeNomReel}}</td>
+            <td>{{voyage.dateDepart | date ('d/m/Y')}}</td>
+            <td>{{voyage.dateDepart | date ('H:i')}}</td>
+            <td>{{voyage.dateArrivee | date ('d/m/Y')}}</th>
+            <td>{{voyage.dateArrivee | date ('H:i')}}</td>
+            <td>{{voyage.nbpassager}}</td>
+            <td>{{voyage.prix}} €</td>
+            <td><a class="btn btn-primary btn-lg" href="{{ path('voyage_show', { 'id': voyage.id }) }}" role="button">Détails</a></td>
+            </tr>
+                
+        {% endfor %}
+            
+        </tbody>
+    </table>
+
+    <h3>Vos réservations</h3>
+     <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col">Ville départ</th>
+            <th scope="col">Ville arrivée</th>
+            <th scope="col">Date départ</th>
+            <th scope="col">Heure départ</th>
+            <th scope="col">Date arrivée</th>
+            <th scope="col">Heure arrivée</th>
+            <th scope="col">Prix place</th>
+            <th scope="col">Moyen paiement</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for reservation in app.user.reservations %}
+            <tr class="table-primary">
+            <td>{{reservation.voyage.getVilleDepart.villeNomReel}}</td>
+            <td>{{reservation.voyage.getVilleArrivee.villeNomReel}}</td>
+            <td>{{reservation.voyage.dateDepart | date ('d/m/Y')}}</td>
+            <td>{{reservation.voyage.dateDepart | date ('H:i')}}</td>
+            <td>{{reservation.voyage.dateArrivee | date ('d/m/Y')}}</th>
+            <td>{{reservation.voyage.dateArrivee | date ('H:i')}}</td>
+            <td>{{reservation.voyage.prix}} €</td>
+            <td>{{reservation.paiement.libelle}}</td>
+            <td><a class="btn btn-primary btn-lg" href="{{ path('voyage_show', { 'id': reservation.voyage.id }) }}" role="button">Détails</a></td>
+            </tr>
+                
+        {% endfor %}
+            
+        </tbody>
+    </table>
+
+
+    <h3>Votre Profil</h3>
+
+    {{ form_start(form) }}
+    
+    {{ form_row(form.nom, {'label' : 'Nom', 'attr' : { 'value' : app.user.nom }}) }}
+    {{ form_row(form.prenom, {'label' : 'Prénom', 'attr' : {  'value' : app.user.prenom}}) }}
+    {{ form_row(form.date_naissance, {'label' : 'Date de naissance', 'attr' : {  'value' : app.user.dateNaissance | date ('d/m/Y')}}) }}
+   
+    {{ form_row(form.telephone, {'label' : 'Téléphone', 'attr' : {  'value' : app.user.telephone}}) }}
+    {{ form_row(form.bio, {'label' : 'Bio', 'attr' : {  'value' : app.user.bio}}) }}
+    
+    <div class="custom-control custom-switch">
+    {{ form_row(form.fumeur, { 'attr': { 'checked' : app.user.fumeur , 'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    
+    {{ form_row(form.musique, {'label' : 'Ecoutez vous de la musique en conduisant', 'attr': {'checked' : app.user.musique ,'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    {{ form_row(form.discussion, {'label' : 'Aimez vous discuter en conduisant', 'attr': {'checked' : app.user.discussion, 'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    {{ form_row(form.passager_fumeur, {'label' : 'Acceptez vous des passagers fumeurs', 'attr': {'checked' : app.user.passagerFumeur, 'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    {{ form_row(form.passager_animal, {'label' : 'Acceptez vous des passagers accompagnés d\'animaux', 'attr': {'checked' : app.user.passagerAnimal, 'class': 'custom-control-input'}, 'label_attr': {'class': 'custom-control-label'}}) }}
+    </div>
+
+    {#<h3>Modifier vos données de connexion</h3>
+
+    {{ form_row(form.email, {'label' : 'Adresse email', 'attr' : { 'value' : app.user.email}}) }}
+    {{ form_row(form.motdepasse, {'label' : 'Mot de passe (8 caractère minimum, au moins une lettre majuscule et au moins une lettre minuscule) ','attr' : { 'placeholder' : "Mot de passe"}})}}
+    {{ form_row(form.confirm_motdepasse, {'label' : 'Confirmation du mot de passe','attr' : { 'placeholder' : "Confirmez votre mot de passe"}})}}
+#}
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    {{ form_end(form) }}
+
+    
+{% endblock %}

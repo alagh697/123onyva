@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+
+    <h1>Reservation</h1>
+    <br><br>      
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Départ de {{voyage.getVilleDepart.villeNomReel}} pour {{voyage.getVilleArrivee.villeNomReel}} avec {{voyage.conducteur.prenom}}</div>
+        <div class="card-body">
+            <p class="card-text"><ul>
+                <li>Départ le {{voyage.dateDepart | date ('d/m/Y')}} à {{voyage.dateDepart | date ('H:i')}}</li>
+                <li>Arrivée le {{voyage.dateArrivee | date ('d/m/Y')}} à {{voyage.dateArrivee | date ('H:i')}}</li>
+                <li>{{voyage.nbpassager}} places</li>
+                <li>{{voyage.prix}} € par place</li>
+                <li>{{voyage.vehiculedescription}} </li>
+            </ul></p>
+        </div>
+    </div>
+
+    {{ form_start(form) }}
+    <div class="custom-control custom-radio">
+    {{ form_widget(form) }}
+    </div>
+    {% if not app.user %}
+    <a class="btn btn-primary btn-lg" href="{{ path('security_connexion') }}" role="button">Connexion</a>
+    {% else %}
+    <button type="submit" class="btn btn-success">Réserver</button>
+    {% endif %}
+    
+    
+    {{ form_end(form) }}
+{% endblock %}

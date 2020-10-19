@@ -1,0 +1,4 @@
+[{% for ville in villes -%}
+    {{ {value: ville.id, label: ville.villeNomReel}|json_encode|raw }}
+    {%- if not loop.last %},{% endif -%}
+{%- endfor %}] 

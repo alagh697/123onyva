@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}1,2,3 On y va!{% endblock %}</title>
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('build/logo123ONYVA.png') }}" />
+        <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css"/>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"><img src="{{ asset('build/logo123ONYVA.png') }}" width="100" ></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('rechercher_voyage') }}">Rechercher un voyage</a>
+                </li>
+
+                {% if not app.user %}
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('security_inscription') }}">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('security_connexion') }}">Connexion</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('proposer_voyage') }}">Proposer un voyage</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('dashboard') }}" class="nav-link">{{ app.user.prenom }}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('security_deconnexion') }}" class="nav-link">Deconnexion</a>
+                </li>
+                {% endif %}
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container">
+        
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            <script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+            <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
+            <script src="{{ asset('build/app.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

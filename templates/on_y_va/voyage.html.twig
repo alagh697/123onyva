@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+   
+    {#<div class="metadata">{{voyage.dateAjout | date ('d/m/Y')}} à {{voyage.dateAjout | date ('H:i')}}
+        </div>#}
+       <br><br>      
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Départ de {{voyage.getVilleDepart.villeNomReel}} pour {{voyage.getVilleArrivee.villeNomReel}} avec {{voyage.conducteur.prenom}}</div>
+        <div class="card-body">
+            <p class="card-text"><ul>
+                <li>Départ le {{voyage.dateDepart | date ('d/m/Y')}} à {{voyage.dateDepart | date ('H:i')}}</li>
+                <li>Arrivée le {{voyage.dateArrivee | date ('d/m/Y')}} à {{voyage.dateArrivee | date ('H:i')}}</li>
+                <li>{{voyage.nbpassager}} places</li>
+                <li>{{voyage.prix}} € par place</li>
+                <li>{{voyage.vehiculedescription}} </li>
+                <li><a class="btn btn-primary btn-lg" href="{{ path('reserver_voyage', { 'id': voyage.id }) }}" role="button">Réserver</a></li>
+
+            </ul></p>
+        </div>
+    </div>
+
+    {% for reservation in voyage.reservations %}
+
+        <div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Réservation de {{reservation.getPassager.prenom}} </div>
+        <div class="card-body">
+            <p class="card-text"><ul>
+                <li>Réservé le {{reservation.date | date ('d/m/Y')}} à {{reservation.date | date ('H:i')}}</li>
+                <li>{{reservation.paiement.libelle}}</li>
+                {% if reservation.confirm %}
+                    <li>Réservation confirmée</li>
+                {% else %}
+                    <li>Réservation non confirmée</li>  
+                {% endif %}
+            
+            </ul></p>
+        </div>
+    </div>
+            
+      {% endfor %}
+
+       
+       
+{% endblock %}
